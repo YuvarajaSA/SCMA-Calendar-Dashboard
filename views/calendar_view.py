@@ -34,10 +34,18 @@ CAT_CLASS = {
 # ── Helpers ───────────────────────────────────────────────────
 
 def _events_on_day(events_df: pd.DataFrame, d: date) -> pd.DataFrame:
+    """Return rows whose date range covers d. Never raises KeyError."""
+    if events_df is None or events_df.empty:
+        return pd.DataFrame()
+    if "start_date" not in events_df.columns or "end_date" not in events_df.columns:
+        return pd.DataFrame()
     ts = pd.Timestamp(d)
-    return events_df[
-        (events_df["start_date"] <= ts) & (events_df["end_date"] >= ts)
-    ]
+    try:
+        return events_df[
+            (events_df["start_date"] <= ts) & (events_df["end_date"] >= ts)
+        ].copy()
+    except Exception:
+        return pd.DataFrame()
 
 
 def _pill_html(ev: pd.Series, conflict_names: set, teams_map: dict) -> str:
