@@ -56,7 +56,7 @@ hydrate_session()          # restore session on every rerun
 
 # ── Step 3a: No Supabase Auth user → login ────────────────────
 if not is_supabase_authenticated():
-    from pages.login import render as login_page
+    from views.login import render as login_page
     login_page()
     st.stop()
 
@@ -83,19 +83,19 @@ status  = st.session_state.get("user_status", "")
 
 # ── No profile → show setup form ─────────────────────────────
 if profile is None:
-    from pages.profile import render_setup
+    from views.profile import render_setup
     render_setup()
     st.stop()
 
 # ── Pending → waiting screen ─────────────────────────────────
 if status == "pending":
-    from pages.profile import render_pending
+    from views.profile import render_pending
     render_pending()
     st.stop()
 
 # ── Rejected → denied screen ──────────────────────────────────
 if status == "rejected":
-    from pages.profile import render_rejected
+    from views.profile import render_rejected
     render_rejected()
     st.stop()
 
@@ -109,7 +109,7 @@ if not is_logged_in():
     st.stop()
 
 # ── Page imports (only after full auth + approval) ────────────
-from pages import (
+from views import (
     dashboard, calendar_view, search,
     add_event, add_team, add_squad,
     conflicts, availability, timeline, admin,
