@@ -50,7 +50,7 @@ def render() -> None:
             if errs:
                 for e in errs: st.error(e)
             else:
-                u = current_user()
+                u = get_supabase_user()
                 ok, msg = add_event(
                     ev_name.strip(), ev_type, ev_category, ev_format,
                     ev_start, ev_end, ev_country.strip(), ev_gender,
