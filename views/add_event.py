@@ -2,7 +2,7 @@
 import streamlit as st
 from datetime import date
 from db.operations import add_event, load_events
-from db.auth import current_user, can_edit
+from db.auth import get_supabase_user, can_edit
 
 
 def render() -> None:
