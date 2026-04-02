@@ -233,18 +233,3 @@ ROUTES = {
 
 if page in ROUTES:
     ROUTES[page]()
-
-import streamlit as st
-from db.supabase_client import get_client
-from db.auth import get_supabase_user
-
-sb = get_client()
-user = get_supabase_user()
-
-if st.button("TEST: Make me admin"):
-    res = sb.table("profiles") \
-        .update({"role": "admin"}) \
-        .eq("id", user.id) \
-        .execute()
-
-    st.write(res)
